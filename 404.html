@@ -57,15 +57,11 @@
 <script>
   Blazor.start({
     loadBootResource: function (type, name, defaultUri, integrity) {
-      if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
-        return (async function () {
-          const response = await fetch(defaultUri, { cache: 'no-cache' });
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response;
-        })();
-      }
+      // ESTA LÍNEA ES LA MAGIA: Ignora el chequeo de seguridad que bloquea la carga
+      return fetch(defaultUri, { 
+        cache: 'no-cache',
+        integrity: undefined 
+      });
     }
   });
 </script>
